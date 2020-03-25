@@ -133,22 +133,11 @@ class RRTPlanner:
         elif self.rrt_type.lower() == 'rrtstar':
             rrt = RRTStar(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
             path = rrt.rrt_star()
-        elif self.rrt_type.lower() == 'rrt_star_bid':
-            rrt = RRTStarBidirectional(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
-            path = rrt.rrt_star_bidirectional()
-        elif self.rrt_type.lower() == 'rrt_star_bid_h':
-            rrt = RRTStarBidirectionalHeuristic(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
-            path = rrt.rrt_star_bid_h()
         else:
             rospy.logerr('RRT type not defined')
         
-        ##### YOUR CODE STARTS HERE #####
-        # Check to make sure end of path is goal, only publish the path if it is
-        
-        
         # Convert to ROS message format and publish
         self.path_pub.publish(self.rrt_to_ros_path(path))
-        ##### YOUR CODE ENDS HERE #####
 
 if __name__ == '__main__':
     rospy.init_node('rrt_planner_node')
@@ -156,5 +145,4 @@ if __name__ == '__main__':
     rrtp = RRTPlanner()
     
     rospy.spin()
-    
 
