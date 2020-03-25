@@ -25,9 +25,9 @@
   <!-- Planner arguments -->
   <arg name="rrt_type" default="rrtstar"
        doc="Variant of RRT to use [rrt, rrtstar, rrt_star_bid, rrt_star_bid_h]"/>
-  <arg name="x" default="0.0"
+  <arg name="x" default="3.0"
        doc="Initial x position of the MAV"/>
-  <arg name="y" default="0.0"
+  <arg name="y" default="1.0"
        doc="Initial y position of the MAV"/>
   <arg name="z" default="0.1"
        doc="Initial z position of the MAV"/>
