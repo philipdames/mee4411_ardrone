@@ -89,17 +89,18 @@ class RRTPlanner:
     ##########
     def get_current_pose(self):
         start = None
+        yaw = None
         try:
             # look up the current pose of the robot using the tf tree
             (trans,rot) = self.tf_listener.lookupTransform(self.map_frame_id, '/ardrone/base_link', rospy.Time(0))
-            (roll, pitch, yaw) = tf.transformations.euler_from_quaternion(rot)
             
             # Convert to RRT state
-            start = (trans[0], trans[1], trans[2], yaw)
+            start = (trans[0], trans[1], trans[2])
+            (roll, pitch, yaw) = tf.transformations.euler_from_quaternion(rot)
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             rospy.logwarn('Could not get robot pose')
         
-        return start
+        return (start, yaw)
     
     ##########
     def rrt_to_ros_path(self, path_in):
@@ -117,12 +118,15 @@ class RRTPlanner:
         rospy.logdebug('RRTPlanner: Got goal')
         
         # Get current pose and set as start pose
-        start = self.get_current_pose()
-        if start is None:
+        (start_pos, start_yaw) = self.get_current_pose()
+        if start is None or yaw is None:
             return
         
         ##### YOUR CODE STARTS HERE #####
-        # Convert input msg to RRT goal of format (x, y, z, yaw)
+        # Convert output of get_current_pose into RRT planner format
+        start = start_pos # MEE 5411: Add yaw to this
+        
+        # Convert input msg to RRT goal of RRT planner format
         goal = None # goal location
         ##### YOUR CODE ENDS HERE #####
 
@@ -133,6 +137,12 @@ class RRTPlanner:
         elif self.rrt_type.lower() == 'rrtstar':
             rrt = RRTStar(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
             path = rrt.rrt_star()
+        elif self.rrt_type.lower() == 'rrt_star_bid':
+            rrt = RRTStarBidirectional(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
+            path = rrt.rrt_star_bidirectional()
+        elif self.rrt_type.lower() == 'rrt_star_bid_h':
+            rrt = RRTStarBidirectionalHeuristic(self.space, self.Q, start, goal, self.max_samples, self.r, self.prc, self.rewire_count)
+            path = rrt.rrt_star_bid_h()
         else:
             rospy.logerr('RRT type not defined')
         
