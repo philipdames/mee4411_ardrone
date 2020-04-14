@@ -60,8 +60,8 @@ goal.pose.orientation.w = math.cos(a/2.)
 # Ensure Gazebo is unpaused
 unpaused = unpause_service()
 i = 0
-while i <= 10 and not unpaused:
-    rospy.sleep(1.0)
+while i <= 40 and not unpaused:
+    rospy.sleep(0.25)
     unpaused = unpause_service()
     i = i + 1
 
