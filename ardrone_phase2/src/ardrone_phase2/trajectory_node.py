@@ -240,7 +240,7 @@ class TrajectoryPlanner:
                 
                 # Append to list of points
                 pts.append(pt)
-            # Compute new offset time to ensure even spacing between all points
+            # MEE 5411 only: Compute new offset time to ensure even spacing between all points
             if k < len(C)-1:
                 t_offset = 0.
             ##### YOUR CODE STARTS HERE #####

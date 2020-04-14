@@ -3,16 +3,24 @@
   <arg name="mav_name" default="ardrone"/>
   <arg name="paused" default="true"/>
   <arg name="rviz_on" default="true"/>
+  <arg name="map_frame_id" default="world"/>
   <!-- Path planner-->
-  <arg name="rrt_type" default="rrt"/>
-  
+  <arg name="rrt_type" default="rrt"
+       doc="Type of RRT to use [rrt, rrtstar, rrt_star_bid, rrt_star_bid_h]"/>
+  <arg name="v_desired" default="1.0"
+       doc="Desired velocity for the drone in m/s"/>
+  <arg name="corner_radius" default="0.01"
+       doc="Radius of the corners for the drone in m"/>
+  <!-- Environment-->
+  <arg name="map_filename" default="$(find project2_sandbox)/config/map0.yaml"/>
+  <!-- Path start-->
   <arg name="x_start" default="3.0"
        doc="Initial x position of the MAV"/>
   <arg name="y_start" default="1.0"
        doc="Initial y position of the MAV"/>
   <arg name="z_start" default="2.0"
        doc="Initial z position of the MAV"/>
-  
+  <!-- Path end-->
   <arg name="x_goal" default="5.0"
        doc="Final x position of the MAV"/>
   <arg name="y_goal" default="19.0"
@@ -21,9 +29,6 @@
        doc="Final z position of the MAV"/>
   <arg name="a_goal" default="1.5"
        doc="Final yaw of the MAV"/>
-  
-  <arg name="map_frame_id" default="world"/>
-  <arg name="map_filename" default="$(find project2_sandbox)/config/map0.yaml"/>
   
   <!-- Include launch file from phase1-->
   <include file="$(find ardrone_phase1)/launch/phase1.launch">
@@ -63,8 +68,8 @@
     </node>
     <!-- Compute trajectory from path-->
     <node name="trajectory_node" pkg="ardrone_phase2" type="trajectory_node.py" output="screen">
-      <param name="v_desired" value="1.0"/>
-      <param name="corner_radius" value="0.01"/>
+      <param name="v_desired" value="$(arg v_desired)"/>
+      <param name="corner_radius" value="$(arg corner_radius)"/>
     </node>
   </group>
 </launch>
