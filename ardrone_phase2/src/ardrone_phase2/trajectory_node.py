@@ -5,6 +5,7 @@ import rospy
 # Subscriber message dependencies
 from nav_msgs.msg import Path
 # Publisher message dependencies
+from geometry_msgs.msg import Point, Quaternion, Transform, Twist
 from trajectory_msgs.msg import MultiDOFJointTrajectory, MultiDOFJointTrajectoryPoint
 # Visualization message dependencies
 from visualization_msgs.msg import MarkerArray, Marker
@@ -58,11 +59,11 @@ class TrajectoryPlanner:
             yaw[i] = 2.*np.arctan2(p.pose.orientation.z, p.pose.orientation.w)
             i = i+1
         
-        if path.shape[1] == 1: # Single point
+        if path.shape[0] == 1: # Single point
             D = 0
             C = []
             C.append(path)
-        elif path.shape[1] == 2: # Single line
+        elif path.shape[0] == 2: # Single line
             D = np.linalg.norm(path[1,:] - path[0,:])
         else: # Multi segment
             # Find distance between points
