@@ -12,4 +12,4 @@ git clone https://github.com/ros/xacro.git
 
 # Build catkin workspace
 cd ~/catkin_ws/
-catkin_make
+catkin build
