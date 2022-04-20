@@ -8,8 +8,8 @@ sudo apt-get install ros-melodic-desktop-full ros-melodic-joy ros-melodic-octoma
 cd ~/catkin_ws/src/
 git clone https://github.com/TempleRAIL/rotors_simulator.git
 git clone https://github.com/philipdames/mee4411_ardrone.git
+git clone https://github.com/ros/xacro.git
 
 # Build catkin workspace
 cd ~/catkin_ws/
 catkin_make
-
