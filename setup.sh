@@ -2,7 +2,7 @@
 
 # Install dependencies
 sudo apt-get update
-sudo apt-get install ros-kinetic-desktop-full ros-kinetic-joy ros-kinetic-octomap-ros ros-kinetic-mavros ros-kinetic-mavlink ros-kinetic-mav-comm python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-kinetic-control-toolbox python-rtree python-numpy
+sudo apt-get install ros-melodic-desktop-full ros-melodic-joy ros-melodic-octomap-ros ros-melodic-mavros ros-melodic-mavlink ros-melodic-mav-comm python-wstool python-catkin-tools protobuf-compiler libgoogle-glog-dev ros-melodic-control-toolbox python-rtree python-numpy
 
 # Clone class package and drone simulator into catkin workspace
 cd ~/catkin_ws/src/
