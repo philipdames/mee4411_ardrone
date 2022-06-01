@@ -2,7 +2,7 @@
   <!-- Map arguments -->
   <arg name="frame_id" default="world"
        doc="Frame ID of the world fixed frame"/>
-  <arg name="map_filename" default="$(find ardrone_phase1)/config/map0.yaml"
+  <arg name="map_filename" default="$(find ardrone_planning)/config/map0.yaml"
        doc="Filename of the map to load"/>
   
   <!-- MAV simulator arguments -->
@@ -33,7 +33,7 @@
        doc="Initial z position of the MAV"/>
   
   <!-- Map visualization -->
-  <node pkg="ardrone_phase1" name="block_vis3d" type="block_vis3d.py"
+  <node pkg="ardrone_planning" name="block_vis3d" type="block_vis3d.py"
         output="screen">
     <param name="alpha" value="0.5"/>
     <param name="frame_id" value="$(arg frame_id)"/>
@@ -53,7 +53,7 @@
   
   <!-- rviz visualizations -->
   <node name="rviz" pkg="rviz" type="rviz" output="screen" 
-        args="-d $(find ardrone_phase1)/rviz/phase1.rviz"/>
+        args="-d $(find ardrone_planning)/rviz/mee4411.rviz"/>
 
   <!-- MAV nodes -->
   <group ns="$(arg mav_name)">
@@ -78,7 +78,7 @@
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     
     <!-- Planner node -->
-    <node name="rrt_planner_node" pkg="ardrone_phase1" type="rrt_planner_node.py" output="screen">
+    <node name="rrt_planner_node" pkg="ardrone_planning" type="rrt_planner_node.py" output="screen">
       <param name="rrt_type" value="$(arg rrt_type)"/>
       <param name="map_frame_id" value="$(arg frame_id)"/>
       <rosparam command="load" file="$(arg map_filename)" />

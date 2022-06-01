@@ -59,7 +59,7 @@ class RRTPlanner:
         
         # Initialize RRT parameters
         self.rrt_type = rospy.get_param('~rrt_type', 'rrt')
-        self.length = rospy.get_param('rrt_length', 10)
+        self.length = rospy.get_param('rrt_length', 1)
         self.num_edges = rospy.get_param('rrt_num_edges', 4)
         self.Q = np.array([(self.length, self.num_edges)])  
         self.r = rospy.get_param('rrt_r', .1)
