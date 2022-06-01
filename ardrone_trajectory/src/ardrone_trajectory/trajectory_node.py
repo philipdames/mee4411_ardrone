@@ -122,11 +122,11 @@ class TrajectoryPlanner:
             mp.color.r = 0.0
             mp.color.g = 0.0
             mp.color.b = 1.0
-            mp.points.append(Point(path[0,0], path[0,1], path[0,2])) # start of path
+            mp.points.append(Point(*path[0,:])) # start of path
             for k in range(p_before.shape[0]): # points before/after each corner
-                mp.points.append(Point(p_before[k,0], p_before[k,1], p_before[k,2]))
-                mp.points.append(Point(p_after[k,0], p_after[k,1], p_after[k,2]))
-            mp.points.append(Point(path[-1,0], path[-1,1], path[-1,2])) # end of path
+                mp.points.append(Point(*p_before[k,:]))
+                mp.points.append(Point(*p_after[k,:]))
+            mp.points.append(Point(*path[-1,:])) # end of path
             # Initialize marker array and add points marker to it
             ma = MarkerArray() # marker array for visualization
             ma.markers.append(mp)
@@ -150,8 +150,8 @@ class TrajectoryPlanner:
                 m.color.b = 0.0
                 # For each segment, compute the duration, B matrix, and add points to visualization marker
                 if k == 0: # First segment
-                    m.points.append(Point(path[0,0], path[0,1], path[0,2])) # start of arrow
-                    m.points.append(Point(path[0,0], path[0,1], path[0,2])) # end of arrow
+                    m.points.append(Point(*path[0,:])) # start of arrow
+                    m.points.append(Point(*path[0,:])) # end of arrow
                     ##### YOUR CODE STARTS HERE #####
                     # Compute duration of segment
                     DT[k,0] = 0.
@@ -159,8 +159,8 @@ class TrajectoryPlanner:
                     B = 0.
                     ##### YOUR CODE ENDS HERE #####
                 elif k == (DT.size - 1): # Last segment
-                    m.points.append(Point(p_after[-1,0], p_after[-1,1], p_after[-1,2])) # start of arrow
-                    m.points.append(Point(p_after[-1,0]+v_after[-1,0], p_after[-1,1]+v_after[-1,1], p_after[-1,2]+v_after[-1,2])) # end of arrow
+                    m.points.append(Point(*p_after[-1,:])) # start of arrow
+                    m.points.append(Point(*(p_after[-1,:]+v_after[-1,:]))) # end of arrow
                     ##### YOUR CODE STARTS HERE #####
                     # Compute duration of segment
                     DT[k,0] = 0.
@@ -168,8 +168,8 @@ class TrajectoryPlanner:
                     ##### YOUR CODE ENDS HERE #####
                 elif k % 2 == 0: # Straight segment
                     kk = (k-2)/2 # get index of point
-                    m.points.append(Point(p_after[kk,0], p_after[kk,1], p_after[kk,2])) # start of arrow
-                    m.points.append(Point(p_after[kk,0]+v_after[kk,0], p_after[kk,1]+v_after[kk,1], p_after[kk,2]+v_after[kk,2])) # end of arrow
+                    m.points.append(Point(*p_after[kk,:])) # start of arrow
+                    m.points.append(Point(*(p_after[kk,:]+v_after[kk,:]))) # end of arrow
                     ##### YOUR CODE STARTS HERE #####
                     # Compute duration of segment
                     DT[k,0] = 0.
@@ -178,8 +178,8 @@ class TrajectoryPlanner:
                     ##### YOUR CODE ENDS HERE #####
                 else: # Curved segment
                     kk = (k-1)/2 # get index of point
-                    m.points.append(Point(p_before[kk,0], p_before[kk,1], p_before[kk,2])) # start of arrow
-                    m.points.append(Point(p_before[kk,0]+v_before[kk,0], p_before[kk,1]+v_before[kk,1], p_before[kk,2]+v_before[kk,2])) # end of arrow
+                    m.points.append(Point(*p_before[kk,:])) # start of arrow
+                    m.points.append(Point(*(p_before[kk,:]+v_before[kk,:]))) # end of arrow
                     ##### YOUR CODE STARTS HERE #####
                     # Compute duration of segment
                     DT[k,0] = 0.
