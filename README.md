@@ -2,7 +2,7 @@
 Code to use the Parrot AR.Drone in MEE4411: Introduction to Mobile Robotics
 
 ## Code Installation instructions
-**Note: This assumes you have Ubuntu 16.04 and have installed the [mee4411_turtlebot3 package](https://github.com/philipdames/mee4411_turtlebot3) using the recommneded directions (so that your ROS workspace is in ~/catkin_ws).**
+**Note: This assumes you have Ubuntu 18.04 and have installed the [mee4411_turtlebot3 package](https://github.com/philipdames/mee4411_turtlebot3) using the recommneded directions (so that your ROS workspace is in ~/catkin_ws).**
 
 Download and run the installation script using the following commands:
 ```
