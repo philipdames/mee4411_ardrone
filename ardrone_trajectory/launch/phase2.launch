@@ -31,14 +31,18 @@
        doc="Final yaw of the MAV"/>
   
   <!-- Include launch file from phase1-->
-  <include file="$(find ardrone_phase1)/launch/phase1.launch">
+  <include file="$(find ardrone_planning)/launch/phase1.launch">
     <arg name="mav_name" value="$(arg mav_name)"/>
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="rviz_on" value="$(arg rviz_on)"/>
+    <arg name="paused"   value="$(arg paused)"/>
+    <arg name="rviz_on"  value="$(arg rviz_on)"/>
     <arg name="rrt_type" value="$(arg rrt_type)"/>
-    <arg name="x" value="$(arg x_start)"/>
-    <arg name="y" value="$(arg y_start)"/>
-    <arg name="z" value="$(arg z_start)"/>
+    <arg name="x_start"  value="$(arg x_start)"/>
+    <arg name="y_start"  value="$(arg y_start)"/>
+    <arg name="z_start"  value="$(arg z_start)"/>
+    <arg name="x_goal"   value="$(arg x_goal)"/>
+    <arg name="y_goal"   value="$(arg y_goal)"/>
+    <arg name="z_goal"   value="$(arg z_goal)"/>
+    <arg name="a_goal"   value="$(arg a_goal)"/>
     <arg name="frame_id" value="$(arg map_frame_id)"/>
     <arg name="map_filename" value="$(arg map_filename)"/>
   </include>
@@ -51,23 +55,12 @@
       <remap from="odometry" to="odometry_sensor1/odometry" />
     </node>
     <!-- Check for collsions with blocks-->
-    <node name="safety_check" pkg="ardrone_phase2" type="safety_check.py" output="screen" required="true">
+    <node name="safety_check" pkg="ardrone_trajectory" type="safety_check.py" output="screen" required="true">
       <param name="map_frame_id" value="$(arg map_frame_id)"/>
       <rosparam command="load" file="$(arg map_filename)" />
     </node>
-    <!-- Publish goal for drone-->
-    <node name="publish_goal" pkg="ardrone_phase2" type="publish_goal.py" output="screen">
-      <param name="x_start" value="$(arg x_start)"/>
-      <param name="y_start" value="$(arg y_start)"/>
-      <param name="z_start" value="$(arg z_start)"/>
-      <param name="a_start" value="0.0"/>
-      <param name="x_goal" value="$(arg x_goal)"/>
-      <param name="y_goal" value="$(arg y_goal)"/>
-      <param name="z_goal" value="$(arg z_goal)"/>
-      <param name="a_goal" value="$(arg a_goal)"/>
-    </node>
     <!-- Compute trajectory from path-->
-    <node name="trajectory_node" pkg="ardrone_phase2" type="trajectory_node.py" output="screen">
+    <node name="trajectory_node" pkg="ardrone_trajectory" type="trajectory_node.py" output="screen">
       <param name="v_desired" value="$(arg v_desired)"/>
       <param name="corner_radius" value="$(arg corner_radius)"/>
     </node>
